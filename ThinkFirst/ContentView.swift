@@ -142,7 +142,6 @@ struct ParentProfileScreen: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(ThinkFirstTheme.Colors.pureBlack)
     }
-    }
 }
 
 // MARK: - Student Main View
