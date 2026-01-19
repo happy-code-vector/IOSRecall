@@ -54,8 +54,8 @@ struct MethodologyScreen: View {
             Spacer()
             
             PrimaryButton(
-                title: "Got it!",
-                isEnabled: true,
+                "Got it!",
+                isDisabled: false,
                 action: onContinue
             )
             .padding(.horizontal)

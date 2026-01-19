@@ -59,8 +59,8 @@ struct NotificationPermissionScreen: View {
             
             VStack(spacing: 12) {
                 PrimaryButton(
-                    title: "Enable Notifications",
-                    isEnabled: true,
+                    "Enable Notifications",
+                    isDisabled: false,
                     action: requestNotificationPermission
                 )
                 

@@ -66,8 +66,8 @@ struct GradeSelectionScreen: View {
             Spacer()
             
             PrimaryButton(
-                title: "Continue",
-                isEnabled: selectedGrade != nil,
+                "Continue",
+                isDisabled: selectedGrade == nil,
                 action: onContinue
             )
             .padding(.horizontal)

@@ -89,8 +89,8 @@ struct GoalSelectionScreen: View {
             Spacer()
             
             PrimaryButton(
-                title: "Continue",
-                isEnabled: selectedGoal != nil,
+                "Continue",
+                isDisabled: selectedGoal == nil,
                 action: onContinue
             )
             .padding(.horizontal)

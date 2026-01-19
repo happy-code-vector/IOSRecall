@@ -86,8 +86,8 @@ struct TryItDemoScreen: View {
             
             if currentStep >= 2 {
                 PrimaryButton(
-                    title: "Continue to App",
-                    isEnabled: true,
+                    "Continue to App",
+                    isDisabled: false,
                     action: onContinue
                 )
                 .padding(.horizontal)
