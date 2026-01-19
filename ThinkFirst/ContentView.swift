@@ -49,8 +49,8 @@ struct LoginScreen: View {
             
             VStack(spacing: 16) {
                 PrimaryButton(
-                    title: "Continue as Guest",
-                    isEnabled: true,
+                    "Continue as Guest",
+                    isDisabled: true,
                     action: {
                         onComplete?()
                     }
