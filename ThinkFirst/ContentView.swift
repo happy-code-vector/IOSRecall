@@ -28,15 +28,43 @@ struct ContentView: View {
 
 // MARK: - Missing Screen Implementations
 struct LoginScreen: View {
+    var onComplete: (() -> Void)?
+    
     var body: some View {
-        VStack {
-            Text("Login Screen")
-                .foregroundColor(.white)
-            Text("Implementation needed")
-                .foregroundColor(.gray)
+        VStack(spacing: 32) {
+            Spacer()
+            
+            VStack(spacing: 16) {
+                Text("Welcome to ThinkFirst")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                
+                Text("Sign in to save your progress")
+                    .font(.body)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+            }
+            
+            VStack(spacing: 16) {
+                PrimaryButton(
+                    title: "Continue as Guest",
+                    isEnabled: true,
+                    action: {
+                        onComplete?()
+                    }
+                )
+                
+                Text("Sign in options coming soon")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+            .padding(.horizontal)
+            
+            Spacer()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(ThinkFirstTheme.Colors.pureBlack)
+        .background(ThinkFirstTheme.Colors.pureBlack.ignoresSafeArea())
     }
 }
 
