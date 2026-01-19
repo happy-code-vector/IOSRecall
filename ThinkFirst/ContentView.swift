@@ -1,5 +1,5 @@
 //
-//  RootView.swift
+//  ContentView.swift
 //  ThinkFirst
 //
 //  Root navigation controller
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RootView: View {
+struct ContentView: View {
     @EnvironmentObject var appState: AppState
     
     var body: some View {
@@ -23,6 +23,125 @@ struct RootView: View {
             }
         }
         .background(ThinkFirstTheme.Colors.pureBlack.ignoresSafeArea())
+    }
+}
+
+// MARK: - Missing Screen Implementations
+struct LoginScreen: View {
+    var body: some View {
+        VStack {
+            Text("Login Screen")
+                .foregroundColor(.white)
+            Text("Implementation needed")
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ThinkFirstTheme.Colors.pureBlack)
+    }
+}
+
+struct HomeScreen: View {
+    var body: some View {
+        VStack {
+            Text("Home Screen")
+                .foregroundColor(.white)
+            Text("Implementation needed")
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ThinkFirstTheme.Colors.pureBlack)
+    }
+}
+
+struct ProgressScreen: View {
+    var body: some View {
+        VStack {
+            Text("Progress Screen")
+                .foregroundColor(.white)
+            Text("Implementation needed")
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ThinkFirstTheme.Colors.pureBlack)
+    }
+}
+
+struct HistoryScreen: View {
+    var body: some View {
+        VStack {
+            Text("History Screen")
+                .foregroundColor(.white)
+            Text("Implementation needed")
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ThinkFirstTheme.Colors.pureBlack)
+    }
+}
+
+struct TechniquesScreen: View {
+    var body: some View {
+        VStack {
+            Text("Techniques Screen")
+                .foregroundColor(.white)
+            Text("Implementation needed")
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ThinkFirstTheme.Colors.pureBlack)
+    }
+}
+
+struct ProfileScreen: View {
+    var body: some View {
+        VStack {
+            Text("Profile Screen")
+                .foregroundColor(.white)
+            Text("Implementation needed")
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ThinkFirstTheme.Colors.pureBlack)
+    }
+}
+
+struct ParentDashboard: View {
+    var body: some View {
+        VStack {
+            Text("Parent Dashboard")
+                .foregroundColor(.white)
+            Text("Implementation needed")
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ThinkFirstTheme.Colors.pureBlack)
+    }
+}
+
+struct FamilyLeaderboard: View {
+    var body: some View {
+        VStack {
+            Text("Family Leaderboard")
+                .foregroundColor(.white)
+            Text("Implementation needed")
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ThinkFirstTheme.Colors.pureBlack)
+    }
+}
+
+struct ParentProfileScreen: View {
+    var body: some View {
+        VStack {
+            Text("Parent Profile")
+                .foregroundColor(.white)
+            Text("Implementation needed")
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(ThinkFirstTheme.Colors.pureBlack)
+    }
     }
 }
 
@@ -95,6 +214,6 @@ struct ParentMainView: View {
 }
 
 #Preview {
-    RootView()
+    ContentView()
         .environmentObject(AppState())
 }

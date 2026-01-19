@@ -13,7 +13,7 @@ struct ThinkFirstApp: App {
     
     var body: some Scene {
         WindowGroup {
-            RootView()
+            ContentView()
                 .environmentObject(appState)
                 .preferredColorScheme(.dark)
         }
