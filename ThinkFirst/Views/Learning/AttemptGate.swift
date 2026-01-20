@@ -232,129 +232,141 @@ struct AttemptGate: View {
     // MARK: - Mastery Mode Toggle
     private var masteryModeToggle: some View {
         VStack(spacing: 12) {
-            Button(action: toggleMasteryMode) {
-                HStack(spacing: 12) {
-                    // Toggle Switch
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(masteryToggleFill)
-                            .frame(width: 48, height: 24)
-                        
-                        Circle()
-                            .fill(Color.white)
-                            .frame(width: 20, height: 20)
-                            .offset(x: masteryMode ? 12 : -12)
-                            .animation(.spring(response: 0.3, dampingFraction: 0.7), value: masteryMode)
-                        
-                        if !appState.isPremium && !masteryMode {
-                            Image(systemName: "lock")
-                                .font(.system(size: 12))
-                                .foregroundColor(.gray)
-                                .offset(x: 12)
-                        }
-                    }
-                    
-                    // Label
-                    HStack(spacing: 8) {
-                        Image(systemName: "bolt")
-                            .font(.system(size: 16))
-                            .foregroundColor(masteryLabelColor)
-                        
-                        Text("Mastery Mode")
-                            .font(ThinkFirstTheme.Typography.subheadline)
-                            .foregroundColor(masteryLabelColor)
-                    }
-                    
-                    Spacer()
-                    
-                    // Badge or Lock
-                    if masteryMode {
-                        HStack(spacing: 4) {
-                            Image(systemName: "award")
-                                .font(.system(size: 12))
-                            Text("+2X XP")
-                                .font(.system(size: 11, weight: .bold))
-                                .tracking(0.5)
-                        }
-                        .foregroundColor(Color.orange)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(
-                            Capsule()
-                                .fill(Color.orange.opacity(0.2))
-                                .overlay(
-                                    Capsule()
-                                        .stroke(Color.orange.opacity(0.3), lineWidth: 1)
-                                )
-                        )
-                        .transition(.scale.combined(with: .opacity))
-                    } else if !appState.isPremium {
-                        HStack(spacing: 4) {
-                            Image(systemName: "lock")
-                                .font(.system(size: 12))
-                            Text("PRO")
-                                .font(.system(size: 10, weight: .bold))
-                                .tracking(0.5)
-                        }
-                        .foregroundColor(Color.purple.opacity(0.8))
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 2)
-                        .background(
-                            Capsule()
-                                .fill(Color.purple.opacity(0.2))
-                                .overlay(
-                                    Capsule()
-                                        .stroke(Color.purple.opacity(0.3), lineWidth: 1)
-                                )
-                        )
-                    }
-                }
-                .padding(16)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(
-                            masteryMode ?
-                            Color.orange.opacity(0.15) :
-                            Color.white.opacity(0.05)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(
-                                    masteryMode ?
-                                    Color.orange.opacity(0.3) :
-                                    Color.white.opacity(0.1),
-                                    lineWidth: 1
-                                )
-                        )
-                )
-            }
-            .scaleEffect(1.0)
-            .animation(.easeOut(duration: 0.08), value: masteryMode)
+            masteryToggleButton
             
             // Mastery Mode Description
             if masteryMode {
-                HStack(spacing: 8) {
-                    Text("🔥")
-                        .font(.system(size: 16))
-                    
-                    Text("AI expects deeper analysis. Worth 2x experience points.")
-                        .font(.system(size: 13))
-                        .foregroundColor(Color.orange)
-                        .lineLimit(nil)
-                }
-                .padding(12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.orange.opacity(0.1))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.orange.opacity(0.2), lineWidth: 1)
-                        )
-                )
-                .transition(.opacity.combined(with: .scale))
+                masteryModeDescription
+                    .transition(.opacity.combined(with: .scale))
             }
         }
         .animation(.easeInOut(duration: 0.3), value: masteryMode)
+    }
+    
+    private var masteryToggleButton: some View {
+        Button(action: toggleMasteryMode) {
+            HStack(spacing: 12) {
+                masteryToggleSwitch
+                masteryToggleLabel
+                Spacer()
+                masteryToggleBadge
+            }
+            .padding(16)
+            .background(masteryToggleBackground)
+        }
+        .scaleEffect(1.0)
+        .animation(.easeOut(duration: 0.08), value: masteryMode)
+    }
+    
+    private var masteryToggleSwitch: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 12)
+                .fill(masteryToggleFill)
+                .frame(width: 48, height: 24)
+            
+            Circle()
+                .fill(Color.white)
+                .frame(width: 20, height: 20)
+                .offset(x: masteryMode ? 12 : -12)
+                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: masteryMode)
+            
+            if !appState.isPremium && !masteryMode {
+                Image(systemName: "lock")
+                    .font(.system(size: 12))
+                    .foregroundColor(.gray)
+                    .offset(x: 12)
+            }
+        }
+    }
+    
+    private var masteryToggleLabel: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "bolt")
+                .font(.system(size: 16))
+                .foregroundColor(masteryLabelColor)
+            
+            Text("Mastery Mode")
+                .font(ThinkFirstTheme.Typography.subheadline)
+                .foregroundColor(masteryLabelColor)
+        }
+    }
+    
+    private var masteryToggleBadge: some View {
+        Group {
+            if masteryMode {
+                HStack(spacing: 4) {
+                    Image(systemName: "award")
+                        .font(.system(size: 12))
+                    Text("+2X XP")
+                        .font(.system(size: 11, weight: .bold))
+                        .tracking(0.5)
+                }
+                .foregroundColor(Color.orange)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 4)
+                .background(
+                    Capsule()
+                        .fill(Color.orange.opacity(0.2))
+                        .overlay(
+                            Capsule()
+                                .stroke(Color.orange.opacity(0.3), lineWidth: 1)
+                        )
+                )
+                .transition(.scale.combined(with: .opacity))
+            } else if !appState.isPremium {
+                HStack(spacing: 4) {
+                    Image(systemName: "lock")
+                        .font(.system(size: 12))
+                    Text("PRO")
+                        .font(.system(size: 10, weight: .bold))
+                        .tracking(0.5)
+                }
+                .foregroundColor(Color.purple.opacity(0.8))
+                .padding(.horizontal, 8)
+                .padding(.vertical, 2)
+                .background(
+                    Capsule()
+                        .fill(Color.purple.opacity(0.2))
+                        .overlay(
+                            Capsule()
+                                .stroke(Color.purple.opacity(0.3), lineWidth: 1)
+                        )
+                )
+            }
+        }
+    }
+    
+    private var masteryToggleBackground: some View {
+        RoundedRectangle(cornerRadius: 12)
+            .fill(masteryMode ? Color.orange.opacity(0.15) : Color.white.opacity(0.05))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(
+                        masteryMode ? Color.orange.opacity(0.3) : Color.white.opacity(0.1),
+                        lineWidth: 1
+                    )
+            )
+    }
+    
+    private var masteryModeDescription: some View {
+        HStack(spacing: 8) {
+            Text("🔥")
+                .font(.system(size: 16))
+            
+            Text("AI expects deeper analysis. Worth 2x experience points.")
+                .font(.system(size: 13))
+                .foregroundColor(Color.orange)
+                .lineLimit(nil)
+        }
+        .padding(12)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.orange.opacity(0.1))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.orange.opacity(0.2), lineWidth: 1)
+                )
+        )
     }
     
     // MARK: - Text Area
