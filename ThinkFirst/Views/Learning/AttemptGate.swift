@@ -25,7 +25,84 @@ struct AttemptGate: View {
     @State private var isShaking = false
     @State private var hintTimer: Timer?
     
+    // MARK: - Computed Properties for Complex Expressions
     private let minimumWordCount = 8
+    
+    private var lockIconFill: LinearGradient {
+        if masteryMode {
+            return LinearGradient(
+                colors: [Color.orange.opacity(0.2), Color.orange.opacity(0.2)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        } else {
+            return LinearGradient(
+                colors: [ThinkFirstTheme.Colors.electricViolet.opacity(0.2), Color.purple.opacity(0.2)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
+    }
+    
+    private var lockIconStroke: Color {
+        masteryMode ? Color.orange.opacity(0.3) : ThinkFirstTheme.Colors.electricViolet.opacity(0.3)
+    }
+    
+    private var lockIconColor: Color {
+        masteryMode ? Color.orange : ThinkFirstTheme.Colors.electricViolet
+    }
+    
+    private var masteryToggleFill: AnyShapeStyle {
+        if masteryMode {
+            return AnyShapeStyle(LinearGradient(
+                colors: [Color.orange, Color.orange.opacity(0.8)],
+                startPoint: .leading,
+                endPoint: .trailing
+            ))
+        } else {
+            return AnyShapeStyle(Color.white.opacity(0.2))
+        }
+    }
+    
+    private var masteryLabelColor: Color {
+        masteryMode ? Color.orange : .gray
+    }
+    
+    private var hintBubbleColor: Color {
+        masteryMode ? Color.orange : ThinkFirstTheme.Colors.cyan
+    }
+    
+    private var hintBubbleFill: Color {
+        masteryMode ? Color.orange.opacity(0.2) : ThinkFirstTheme.Colors.cyan.opacity(0.2)
+    }
+    
+    private var hintBubbleStroke: Color {
+        masteryMode ? Color.orange.opacity(0.4) : ThinkFirstTheme.Colors.cyan.opacity(0.4)
+    }
+    
+    private var submitButtonGradient: LinearGradient {
+        if masteryMode {
+            return LinearGradient(
+                colors: [Color.orange, Color.orange.opacity(0.8)],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        } else {
+            return LinearGradient(
+                colors: [ThinkFirstTheme.Colors.electricViolet, Color.purple],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        }
+    }
+    
+    private var submitButtonBackground: AnyShapeStyle {
+        if canSubmit {
+            return AnyShapeStyle(submitButtonGradient)
+        } else {
+            return AnyShapeStyle(Color.white.opacity(0.1))
+        }
+    }
     
     private var wordCount: Int {
         attempt.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -121,31 +198,16 @@ struct AttemptGate: View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(
-                            masteryMode ?
-                            LinearGradient(
-                                colors: [Color.orange.opacity(0.2), Color.orange.opacity(0.2)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ) :
-                            LinearGradient(
-                                colors: [ThinkFirstTheme.Colors.electricViolet.opacity(0.2), Color.purple.opacity(0.2)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
+                        .fill(lockIconFill)
                         .frame(width: 40, height: 40)
                         .overlay(
                             Circle()
-                                .stroke(
-                                    masteryMode ? Color.orange.opacity(0.3) : ThinkFirstTheme.Colors.electricViolet.opacity(0.3),
-                                    lineWidth: 1
-                                )
+                                .stroke(lockIconStroke, lineWidth: 1)
                         )
                     
                     Image(systemName: "lock")
                         .font(.system(size: 20))
-                        .foregroundColor(masteryMode ? Color.orange : ThinkFirstTheme.Colors.electricViolet)
+                        .foregroundColor(lockIconColor)
                 }
                 
                 VStack(alignment: .leading, spacing: 2) {
@@ -175,15 +237,7 @@ struct AttemptGate: View {
                     // Toggle Switch
                     ZStack {
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(
-                                masteryMode ?
-                                LinearGradient(
-                                    colors: [Color.orange, Color.orange.opacity(0.8)],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                ) :
-                                Color.white.opacity(0.2)
-                            )
+                            .fill(masteryToggleFill)
                             .frame(width: 48, height: 24)
                         
                         Circle()
@@ -204,11 +258,11 @@ struct AttemptGate: View {
                     HStack(spacing: 8) {
                         Image(systemName: "bolt")
                             .font(.system(size: 16))
-                            .foregroundColor(masteryMode ? Color.orange : .gray)
+                            .foregroundColor(masteryLabelColor)
                         
                         Text("Mastery Mode")
                             .font(ThinkFirstTheme.Typography.subheadline)
-                            .foregroundColor(masteryMode ? Color.orange : .gray)
+                            .foregroundColor(masteryLabelColor)
                     }
                     
                     Spacer()
@@ -401,24 +455,15 @@ struct AttemptGate: View {
             HStack {
                 Text(masteryMode ? "Show me everything you know..." : "Just give me the gist...")
                     .font(.system(size: 14))
-                    .foregroundColor(masteryMode ? Color.orange : ThinkFirstTheme.Colors.cyan)
+                    .foregroundColor(hintBubbleColor)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 10)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(
-                                masteryMode ?
-                                Color.orange.opacity(0.2) :
-                                ThinkFirstTheme.Colors.cyan.opacity(0.2)
-                            )
+                            .fill(hintBubbleFill)
                             .overlay(
                                 RoundedRectangle(cornerRadius: 12)
-                                    .stroke(
-                                        masteryMode ?
-                                        Color.orange.opacity(0.4) :
-                                        ThinkFirstTheme.Colors.cyan.opacity(0.4),
-                                        lineWidth: 1
-                                    )
+                                    .stroke(hintBubbleStroke, lineWidth: 1)
                             )
                     )
                 
@@ -428,11 +473,7 @@ struct AttemptGate: View {
             // Pointer
             HStack {
                 Rectangle()
-                    .fill(
-                        masteryMode ?
-                        Color.orange.opacity(0.2) :
-                        ThinkFirstTheme.Colors.cyan.opacity(0.2)
-                    )
+                    .fill(hintBubbleFill)
                     .frame(width: 8, height: 8)
                     .rotationEffect(.degrees(45))
                     .offset(x: 24, y: -4)
@@ -563,21 +604,7 @@ struct AttemptGate: View {
                         .padding(.vertical, 16)
                         .background(
                             RoundedRectangle(cornerRadius: 16)
-                                .fill(
-                                    canSubmit ?
-                                    (masteryMode ?
-                                     LinearGradient(
-                                        colors: [Color.orange, Color.orange.opacity(0.8)],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                     ) :
-                                     LinearGradient(
-                                        colors: [ThinkFirstTheme.Colors.electricViolet, Color.purple],
-                                        startPoint: .leading,
-                                        endPoint: .trailing
-                                     )) :
-                                    Color.white.opacity(0.1)
-                                )
+                                .fill(submitButtonBackground)
                         )
                 }
                 .disabled(!canSubmit)
