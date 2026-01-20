@@ -90,12 +90,7 @@ struct OnboardingFlow: View {
             createdAt: Date()
         )
         
-        appState.saveUser(user)
-        
-        if let grade = selectedGrade {
-            StorageService.shared.saveGradeLevel(grade)
-        }
-        
+        appState.setCurrentUser(user)
         appState.completeOnboarding()
     }
 }

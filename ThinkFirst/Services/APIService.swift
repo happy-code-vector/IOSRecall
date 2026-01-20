@@ -28,60 +28,36 @@ class APIService {
     func evaluateAttempt(
         question: String,
         attempt: String,
+        masteryMode: Bool = false
+    ) async throws -> Evaluation {
+        // For demo purposes, return a mock evaluation
+        // In a real app, this would make an API call
+        
+        let wordCount = attempt.components(separatedBy: .whitespacesAndNewlines).filter { !$0.isEmpty }.count
+        let effortScore = min(3, max(1, wordCount / 10))
+        let understandingScore = min(3, max(1, wordCount / 15))
+        
+        return Evaluation(
+            effortScore: effortScore,
+            understandingScore: understandingScore,
+            copied: false,
+            whatIsRight: "You showed good understanding of the basic concepts.",
+            whatIsMissing: "Try to include more specific details and examples.",
+            unlock: effortScore + understandingScore >= 4,
+            fullExplanation: "This is a comprehensive explanation of the topic with all the key details and examples.",
+            coachHint: masteryMode ? "For mastery mode, try to explain the underlying principles." : "Think about the main components and how they work together.",
+            levelUpTip: "Great work! Try to connect this concept to other topics you've learned."
+        )
+    }
+    
+    func evaluateAttempt(
+        question: String,
+        attempt: String,
         userId: String,
         masteryMode: Bool,
         gradeLevel: String
     ) async throws -> Evaluation {
-        let endpoint = "\(baseURL)/evaluate"
-        
-        guard let url = URL(string: endpoint) else {
-            throw APIError.invalidURL
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue(apiKey, forHTTPHeaderField: "apikey")
-        
-        let requestBody = AttemptRequest(
-            question: question,
-            attempt: attempt,
-            userId: userId,
-            masteryMode: masteryMode,
-            gradeLevel: gradeLevel
-        )
-        
-        request.httpBody = try JSONEncoder().encode(requestBody)
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            
-            guard let httpResponse = response as? HTTPURLResponse else {
-                throw APIError.invalidResponse
-            }
-            
-            guard (200...299).contains(httpResponse.statusCode) else {
-                throw APIError.serverError("Status code: \(httpResponse.statusCode)")
-            }
-            
-            let evaluationResponse = try JSONDecoder().decode(EvaluationResponse.self, from: data)
-            
-            return Evaluation(
-                effortScore: evaluationResponse.effortScore,
-                understandingScore: evaluationResponse.understandingScore,
-                copied: evaluationResponse.copied,
-                whatIsRight: evaluationResponse.whatIsRight,
-                whatIsMissing: evaluationResponse.whatIsMissing,
-                unlock: evaluationResponse.unlock,
-                fullExplanation: evaluationResponse.fullExplanation,
-                coachHint: evaluationResponse.coachHint,
-                levelUpTip: evaluationResponse.levelUpTip
-            )
-        } catch let error as DecodingError {
-            throw APIError.decodingError(error)
-        } catch {
-            throw APIError.networkError(error)
-        }
+        return try await evaluateAttempt(question: question, attempt: attempt, masteryMode: masteryMode)
     }
     
     // MARK: - Streak

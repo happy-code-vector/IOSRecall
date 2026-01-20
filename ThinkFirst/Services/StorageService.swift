@@ -150,4 +150,35 @@ class StorageService {
     func hasGuardianPin() -> Bool {
         getGuardianPin() != nil
     }
+    
+    // MARK: - Generic Storage Methods
+    func setBool(_ value: Bool, for key: String) {
+        defaults.set(value, forKey: key)
+    }
+    
+    func getBool(for key: String) -> Bool? {
+        guard defaults.object(forKey: key) != nil else { return nil }
+        return defaults.bool(forKey: key)
+    }
+    
+    func setInt(_ value: Int, for key: String) {
+        defaults.set(value, forKey: key)
+    }
+    
+    func getInt(for key: String) -> Int? {
+        guard defaults.object(forKey: key) != nil else { return nil }
+        return defaults.integer(forKey: key)
+    }
+    
+    func setData(_ data: Data, for key: String) {
+        defaults.set(data, forKey: key)
+    }
+    
+    func getData(for key: String) -> Data? {
+        defaults.data(forKey: key)
+    }
+    
+    func removeValue(for key: String) {
+        defaults.removeObject(forKey: key)
+    }
 }
