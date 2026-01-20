@@ -145,25 +145,6 @@ struct LoginScreen: View {
     ContentView()
         .environmentObject(AppState())
 }
-                PrimaryButton(
-                    "Continue as Guest",
-                    isDisabled: true,
-                    action: {
-                        onComplete?()
-                    }
-                )
-                
-                Text("Sign in options coming soon")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-            }
-            .padding(.horizontal)
-            
-            Spacer()
-        }
-        .background(ThinkFirstTheme.Colors.pureBlack.ignoresSafeArea())
-    }
-}
 
 struct HomeScreen: View {
     var body: some View {

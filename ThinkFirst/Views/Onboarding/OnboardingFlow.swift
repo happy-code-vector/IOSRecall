@@ -36,22 +36,25 @@ struct OnboardingFlow: View {
                             onContinue: { currentStep = 3 }
                         )
                     } else {
-                        // Skip grade for parents
+                        // Skip grade for parents, go directly to goal
                         GoalSelectionScreen(
                             userType: selectedUserType ?? .parent,
                             selectedGoal: $selectedGoal,
-                            onContinue: { currentStep = 3 }
+                            onContinue: { currentStep = 4 }
                         )
-                        .onAppear {
-                            currentStep = 3
-                        }
                     }
                 case 3:
-                    GoalSelectionScreen(
-                        userType: selectedUserType ?? .student,
-                        selectedGoal: $selectedGoal,
-                        onContinue: { currentStep = 4 }
-                    )
+                    // Only show for students (parents skip this)
+                    if selectedUserType == .student {
+                        GoalSelectionScreen(
+                            userType: selectedUserType ?? .student,
+                            selectedGoal: $selectedGoal,
+                            onContinue: { currentStep = 4 }
+                        )
+                    } else {
+                        // Parents already saw goal selection, skip to methodology
+                        MethodologyScreen(onContinue: { currentStep = 5 })
+                    }
                 case 4:
                     MethodologyScreen(onContinue: { currentStep = 5 })
                 case 5:
@@ -90,7 +93,13 @@ struct OnboardingFlow: View {
             createdAt: Date()
         )
         
+        // Save user and onboarding data
         appState.setCurrentUser(user)
         appState.completeOnboarding()
+        
+        // Save additional onboarding data to storage
+        if let goal = selectedGoal {
+            StorageService.shared.defaults.set(goal, forKey: "selectedGoal")
+        }
     }
 }
