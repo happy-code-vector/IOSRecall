@@ -34,7 +34,7 @@ struct EvaluationScreen: View {
     
     private var isHighEffort: Bool {
         guard let evaluation = evaluation else { return false }
-        return evaluation.effortScore >= 2.5
+        return Double(evaluation.effortScore) >= 2.5
     }
     
     var body: some View {

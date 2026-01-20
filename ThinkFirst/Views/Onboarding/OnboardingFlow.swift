@@ -62,11 +62,13 @@ struct OnboardingFlow: View {
                 case 6:
                     NotificationPermissionScreen(onContinue: { currentStep = 7 })
                 case 7:
-                    LoginScreen(
-                        onComplete: {
-                            completeOnboarding()
+                    LoginScreen()
+                        .onAppear {
+                            // Auto-complete for demo purposes
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                completeOnboarding()
+                            }
                         }
-                    )
                 default:
                     EmptyView()
                 }
@@ -99,7 +101,8 @@ struct OnboardingFlow: View {
         
         // Save additional onboarding data to storage
         if let goal = selectedGoal {
-            StorageService.shared.defaults.set(goal, forKey: "selectedGoal")
+            let goalData = goal.data(using: .utf8) ?? Data()
+            StorageService.shared.setData(goalData, for: "selectedGoal")
         }
     }
 }

@@ -50,8 +50,8 @@ class AppState: ObservableObject {
     @Published var isPremium = false
     
     // Services
-    private let apiService = APIService()
-    private let storageService = StorageService()
+    private let apiService = APIService.shared
+    private let storageService = StorageService.shared
     
     // MARK: - Computed Properties
     var isStudent: Bool {

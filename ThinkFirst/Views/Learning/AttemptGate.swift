@@ -324,7 +324,7 @@ struct AttemptGate: View {
                 // Text Editor
                 VStack(alignment: .leading, spacing: 0) {
                     TextEditor(text: $attempt)
-                        .font(.system(size: 17, family: .monospaced))
+                        .font(.system(size: 17, design: .monospaced))
                         .foregroundColor(.white)
                         .scrollContentBackground(.hidden)
                         .background(Color.clear)
@@ -349,7 +349,7 @@ struct AttemptGate: View {
                 // Placeholder
                 if attempt.isEmpty {
                     Text(isRevisionMode ? "Add a bit more detail..." : "Type your explanation here…")
-                        .font(.system(size: 17, family: .monospaced))
+                        .font(.system(size: 17, design: .monospaced))
                         .foregroundColor(.white.opacity(0.4))
                         .padding(.top, 28)
                         .padding(.leading, 24)

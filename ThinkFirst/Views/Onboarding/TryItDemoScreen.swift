@@ -130,7 +130,7 @@ struct TryItDemoScreen: View {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .top) {
                     Text(typedText + (typedText.count < fullText.count && showCursor ? "|" : ""))
-                        .font(.system(size: 14, family: .monospaced))
+                        .font(.system(size: 14, design: .monospaced))
                         .foregroundColor(.white.opacity(0.9))
                         .lineLimit(nil)
                         .frame(maxWidth: .infinity, alignment: .leading)
