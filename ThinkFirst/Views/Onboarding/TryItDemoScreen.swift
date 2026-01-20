@@ -88,8 +88,6 @@ struct TryItDemoScreen: View {
             
             Spacer()
         }
-        .opacity(0)
-        .animation(.easeInOut(duration: 0.5).delay(0.2), value: UUID())
     }
     
     // MARK: - Question Card
@@ -118,9 +116,6 @@ struct TryItDemoScreen: View {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(red: 0.1, green: 0.1, blue: 0.1))
         )
-        .opacity(0)
-        .offset(y: 20)
-        .animation(.easeOut(duration: 0.5).delay(0.3), value: UUID())
     }
     
     // MARK: - Input Box
@@ -166,9 +161,6 @@ struct TryItDemoScreen: View {
             }
             .offset(x: 8, y: -8)
         }
-        .opacity(0)
-        .offset(y: 20)
-        .animation(.easeOut(duration: 0.5).delay(0.5), value: UUID())
     }
     
     // MARK: - Unlock Button

@@ -7,7 +7,6 @@
 
 import SwiftUI
 import UserNotifications
-import UserNotifications
 
 struct NotificationPermissionScreen: View {
     let onContinue: () -> Void
@@ -35,9 +34,6 @@ struct NotificationPermissionScreen: View {
                     .lineLimit(nil)
                     .padding(.horizontal, 24)
             }
-            .opacity(0)
-            .offset(y: 20)
-            .animation(.easeOut(duration: 0.6).delay(0.3), value: UUID())
             
             Spacer()
             
@@ -55,9 +51,6 @@ struct NotificationPermissionScreen: View {
                                 .fill(Color.white)
                         )
                 }
-                .opacity(0)
-                .offset(y: 20)
-                .animation(.easeOut(duration: 0.6).delay(0.5), value: UUID())
                 
                 // Maybe Later - Text Button
                 Button(action: onContinue) {
@@ -67,8 +60,6 @@ struct NotificationPermissionScreen: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                 }
-                .opacity(0)
-                .animation(.easeOut(duration: 0.6).delay(0.6), value: UUID())
             }
             .padding(.horizontal, 24)
         }
@@ -159,10 +150,6 @@ struct NotificationPermissionScreen: View {
             .offset(y: animateBell ? -8 : 0)
             .animation(.easeInOut(duration: 2).repeatForever(autoreverses: true), value: animateBell)
         }
-        .opacity(0)
-        .scaleEffect(0.8)
-        .offset(y: -20)
-        .animation(.easeOut(duration: 0.8), value: UUID())
     }
     
     // MARK: - Actions
