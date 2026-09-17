@@ -1,9 +1,12 @@
 # Screenshot configuration for fastlane snapshot
 # Run with: fastlane snapshot
 
-# The only device screenshots are captured on
+# The only device screenshots are captured on.
+# iPhone 17 Pro: same 6.3" logical resolution (402x874 pt) as iPhone 16 Pro —
+# Xcode 26.x doesn't ship an iPhone 16 Pro simulator on the iOS 26.2 runtime,
+# so this is the equivalent device that exists on the build Mac.
 devices([
-  "iPhone 16 Pro"
+  "iPhone 17 Pro"
 ])
 
 languages(["en-US"])
