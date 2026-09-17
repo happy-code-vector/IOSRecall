@@ -54,22 +54,31 @@ final class ThinkFirstUITests: XCTestCase {
         // 01 Splash (auto-advances after 10s while UI testing)
         snapshot("01_SplashScreen")
 
-        // 02 Account type — select "I am a Student" to enable Continue
-        let studentCard = app.buttons["I am a Student"].firstMatch
-        XCTAssertTrue(studentCard.waitForExistence(timeout: 15), "Account type screen did not appear")
+        // 02 Account type — select "I am a Student" to enable Continue.
+        // The card Button's label is the combined icon+title+description string,
+        // so it must be matched with a contains predicate, not an exact match.
+        let studentCard = app.buttons.matching(
+            NSPredicate(format: "label CONTAINS %@", "I am a Student")
+        ).firstMatch
+        XCTAssertTrue(studentCard.waitForExistence(timeout: 20), "Account type screen did not appear")
         snapshot("02_AccountTypeScreen")
         tap(studentCard, message: "Student card not tappable")
         tap(app.buttons["Continue"].firstMatch, message: "Continue button on account type screen not found")
 
-        // 03 Grade level — select "High School"
-        let highSchool = app.buttons["High School"].firstMatch
+        // 03 Grade level — select "High School" (contains-match: card label
+        // also bundles the selection-state symbol)
+        let highSchool = app.buttons.matching(
+            NSPredicate(format: "label CONTAINS %@", "High School")
+        ).firstMatch
         XCTAssertTrue(highSchool.waitForExistence(timeout: 10), "Grade selection screen did not appear")
         snapshot("03_GradeSelectionScreen")
         tap(highSchool, message: "High School option not tappable")
         tap(app.buttons["Continue"].firstMatch, message: "Continue button on grade selection screen not found")
 
-        // 04 Goal — select first goal
-        let goal = app.buttons["Improve critical thinking"].firstMatch
+        // 04 Goal — select first goal (contains-match, same card layout as above)
+        let goal = app.buttons.matching(
+            NSPredicate(format: "label CONTAINS %@", "Improve critical thinking")
+        ).firstMatch
         XCTAssertTrue(goal.waitForExistence(timeout: 10), "Goal selection screen did not appear")
         snapshot("04_GoalSelectionScreen")
         tap(goal, message: "Goal option not tappable")
