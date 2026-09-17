@@ -65,7 +65,9 @@ struct OnboardingFlow: View {
                     LoginScreen()
                         .onAppear {
                             // Auto-complete for demo purposes
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            // (delayed under UI testing so the login screen can be captured first)
+                            let completeDelay: TimeInterval = ProcessInfo.processInfo.arguments.contains("-uitesting") ? 10.0 : 0.5
+                            DispatchQueue.main.asyncAfter(deadline: .now() + completeDelay) {
                                 completeOnboarding()
                             }
                         }

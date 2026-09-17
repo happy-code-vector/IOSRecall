@@ -89,7 +89,9 @@ struct SplashScreen: View {
             }
             
             // Auto-continue after animation
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            // (held longer under UI testing so the splash can be captured first)
+            let autoContinueDelay: TimeInterval = ProcessInfo.processInfo.arguments.contains("-uitesting") ? 10.0 : 2.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + autoContinueDelay) {
                 onContinue()
             }
         }

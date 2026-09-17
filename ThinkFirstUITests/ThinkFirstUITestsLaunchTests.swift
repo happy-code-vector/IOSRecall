@@ -2,32 +2,14 @@
 //  ThinkFirstUITestsLaunchTests.swift
 //  ThinkFirstUITests
 //
-//  Created by Ahmad Rasheed on 1/16/26.
+//  Intentionally empty: launch/perf template tests were removed because they
+//  re-ran for every app UI configuration (multiplying screenshot runs) and
+//  captured a duplicate of the splash screen. All screenshot capture lives in
+//  ThinkFirstUITests.swift. This file can be deleted safely.
 //
 
 import XCTest
 
 final class ThinkFirstUITestsLaunchTests: XCTestCase {
-
-    override class var runsForEachTargetApplicationUIConfiguration: Bool {
-        true
-    }
-
-    override func setUpWithError() throws {
-        continueAfterFailure = false
-    }
-
-    @MainActor
-    func testLaunch() throws {
-        let app = XCUIApplication()
-        app.launch()
-
-        // Insert steps here to perform after app launch but before taking a screenshot,
-        // such as logging into a test account or navigating somewhere in the app
-
-        let attachment = XCTAttachment(screenshot: app.screenshot())
-        attachment.name = "Launch Screen"
-        attachment.lifetime = .keepAlways
-        add(attachment)
-    }
+    // No test methods — kept only as a placeholder.
 }

@@ -72,7 +72,33 @@ class AppState: ObservableObject {
     
     // MARK: - Initialization
     init() {
+        // Launch arguments used by ThinkFirstUITests for deterministic screenshot capture
+        let launchArguments = ProcessInfo.processInfo.arguments
+
+        // Start from a clean slate (fresh onboarding) on every test run
+        if launchArguments.contains("-uitest-reset") {
+            clearUserData()
+        }
+
         loadUserData()
+
+        // Jump straight into the main app (skips onboarding/login screens)
+        if launchArguments.contains("-uitest-skip-onboarding") {
+            hasCompletedOnboarding = true
+            if currentUser == nil {
+                setCurrentUser(User(
+                    id: "uitest-demo-user",
+                    name: "Demo User",
+                    email: nil,
+                    type: .student,
+                    gradeLevel: .highSchool,
+                    subscriptionTier: .free,
+                    avatarURL: nil,
+                    familyId: nil,
+                    createdAt: Date()
+                ))
+            }
+        }
     }
     
     // MARK: - User Management
